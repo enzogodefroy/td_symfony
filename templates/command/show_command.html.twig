@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { 
+      margin: 1em auto; 
+      width: 95%; 
+      font: 18px/1.5 sans-serif;
+      
+    }
+
+    body {
+      background-color: #a2a2a2 !important;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.css">
+<script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js"></script>
+
+<div class="example-wrapper">
+  <div class="ui segment">
+    Command n°{{command.id}} by {{ command.idUser.name }}
+  </div>
+  <table class="ui celled table">
+    <thead>
+      <tr>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Section</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for detail in command.idProduct %}
+        <tr>
+          <td data-label="Name">{{ detail.name }}</td>
+          <td data-label="Quantity">3</td> <!-- TODO -->
+          <td data-label="Section">{{ detail.idSection.name }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

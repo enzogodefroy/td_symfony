@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { 
+      margin: 1em auto; 
+      width: 95%; 
+      font: 18px/1.5 sans-serif;
+      
+    }
+
+    body {
+      background-color: #a2a2a2 !important;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.css">
+<script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js"></script>
+
+<div class="example-wrapper">
+    <table class="ui celled table">
+  <thead>
+    <tr>
+        <th>Name</th>
+        <th>Comments</th>
+        <th>Stock</th>
+        <th>Price</th>
+        <th>Promotion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Name">{{ product.name }}</td>
+      <td data-label="Comments">{{ product.comments }}</td>
+      <td data-label="Stock">{{ product.stock }}</td>
+      <td data-label="Price">{{ product.price }}</td>
+      <td data-label="Promotion">{{ product.promotion }}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+{% endblock %}

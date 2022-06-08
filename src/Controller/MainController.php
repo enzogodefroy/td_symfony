@@ -28,21 +28,7 @@ class MainController extends AbstractController
         return $this->render('product/show_product.html.twig', ['product' => $product]);
     }
 
-    #[Route('/command/{id}', name: 'command')]
-    public function showCommand(ManagerRegistry $doctrine, int $id): Response
-    {
-        $command = $doctrine->getRepository(Command::class)->find($id);
-
-        if (!$command) {
-            throw $this->createNotFoundException(
-                'No command found for id '.$id
-            );
-        }
-
-        return $this->render('command/show_command.html.twig', ['command' => $command]);
-    }
-
-    #[Route('/command_byId/{idCommand}', name: 'command_byId')]
+    #[Route('/command/{idCommand}', name: 'command')]
     public function getCommand(ManagerRegistry $doctrine, int $idCommand) : Response
     {
         $command = $doctrine->getRepository(CommandDetail::class)->findBy(['command' => $idCommand]);
@@ -53,7 +39,7 @@ class MainController extends AbstractController
             );
         }
 
-        return $this->render('command/show_command_test.html.twig', ['commands' => $command]);
+        return $this->render('command/show_command.html.twig', ['commands' => $command]);
     }
 
     #[Route('/validateCommandDetail', name: 'validateCommandDetail')]
@@ -76,6 +62,6 @@ class MainController extends AbstractController
         $entityManager->persist($commanddetail);
         $entityManager->flush();
 
-        return $this->redirectToRoute('command_byId', ['idCommand' => $command]);
+        return $this->redirectToRoute('command', ['idCommand' => $command]);
     }
 }

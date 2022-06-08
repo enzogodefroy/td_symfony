@@ -21,23 +21,35 @@
 <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js"></script>
 
 <div class="example-wrapper">
-  <div class="ui segment">
-    Command n°{{command.id}} by {{ command.idUser.name }}
-  </div>
   <table class="ui celled table">
     <thead>
       <tr>
           <th>Name</th>
           <th>Quantity</th>
           <th>Section</th>
+          <th>Set prepared</th>
       </tr>
     </thead>
     <tbody>
-      {% for detail in command.idProduct %}
+      {% for c in commands %}
         <tr>
-          <td data-label="Name">{{ detail.name }}</td>
-          <td data-label="Quantity">3</td> <!-- TODO -->
-          <td data-label="Section">{{ detail.idSection.name }}</td>
+            <td data-label="Name">{{ c.product.name }}</td>
+            <td data-label="Quantity">{{ c.quantity }}</td>
+            <td data-label="Section">{{ c.product.idsection.name }}</td>
+            {% if c.prepared != 1 %}
+                <td>
+                    <form method="POST" action='/validateCommandDetail'>
+                        <div class="ui checkbox">
+                            <input type="checkbox" name="example" onChange="this.form.submit()">
+                            <input type="hidden" name="product" value="{{ c.product.id }}" />
+                            <input type="hidden" name="command" value="{{ c.command.id }}" />
+                            <label>Set prepared</label>
+                        </div>
+                    </form>
+                </td>
+            {% else %}
+                <td></td>
+            {% endif %}
         </tr>
       {% endfor %}
     </tbody>

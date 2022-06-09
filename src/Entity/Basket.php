@@ -33,9 +33,9 @@ class Basket
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateCreation", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="dateCreation", type="datetime", nullable=false)
      */
-    private $datecreation = 'current_timestamp()';
+    private $datecreation;
 
     /**
      * @var \User

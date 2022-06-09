@@ -9,10 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Command
  *
- * @ORM\Table(name="commanddetail", indexes={@ORM\Index(name="idTimeslot", columns={"idTimeslot"}), @ORM\Index(name="idUser", columns={"idUser"}), @ORM\Index(name="idEmployee", columns={"idEmployee"})})
+ * @ORM\Table(name="basketdetail", indexes={@ORM\Index(name="idTimeslot", columns={"idTimeslot"}), @ORM\Index(name="idUser", columns={"idUser"}), @ORM\Index(name="idEmployee", columns={"idEmployee"})})
  * @ORM\Entity
  */
-class CommandDetail
+class BasketDetail
 {
     /**
      * @var \Product
@@ -26,15 +26,15 @@ class CommandDetail
     private $product;
 
     /**
-     * @var \Command
+     * @var \Basket
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Command")
+     * @ORM\ManyToOne(targetEntity="Basket")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idCommand", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="idBasket", referencedColumnName="id")
      * })
      */
-    private $command;
+    private $basket;
 
     /**
      * @var int
@@ -42,13 +42,6 @@ class CommandDetail
      * @ORM\Column(name="quantity", type="integer", length=0, nullable=false)
      */
     private $quantity;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="prepared", type="boolean", length=0, nullable=false)
-     */
-    private $prepared;
 
     /**
      * Constructor
@@ -70,18 +63,6 @@ class CommandDetail
         return $this;
     }
 
-    public function getPrepared()
-    {
-        return $this->prepared;
-    }
-
-    public function setPrepared($prepared): self
-    {
-        $this->prepared = $prepared;
-
-        return $this;
-    }
-
     public function getProduct(): ?Product
     {
         return $this->product;
@@ -94,20 +75,15 @@ class CommandDetail
         return $this;
     }
 
-    public function getCommand(): ?Command
+    public function getBasket(): ?Basket
     {
-        return $this->command;
+        return $this->basket;
     }
 
-    public function setCommand(?Command $command): self
+    public function setBasket(?Basket $basket): self
     {
-        $this->command = $command;
+        $this->basket = $basket;
 
         return $this;
-    }
-
-    public function isPrepared(): ?bool
-    {
-        return $this->prepared;
     }
 }

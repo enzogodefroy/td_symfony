@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paniers{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { 
+      margin: 1em auto; 
+      width: 95%; 
+      font: 18px/1.5 sans-serif;
+      
+    }
+
+    body {
+      background-color: #a2a2a2 !important;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.css">
+<script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js"></script>
+
+<div class="example-wrapper">
+  <table class="ui celled table">
+    <thead>
+      <tr>
+          <th>Name</th>
+          <th>Creation date</th>
+          <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for b in baskets %}
+        <tr>
+            <td data-label="Name">{{ b.name }}</td>
+            <td data-label="CreationDate">{{ b.dateCreation.format('d/m/Y H:i:s') }}</td>
+            <td>
+                <a href="/basketDetail/{{ b.id }}" class="ui button">Details</a>
+                <a href="/chooseTimeslot/{{ b.id }}" class="ui button">Valider ce panier</a>
+            </td>
+            
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

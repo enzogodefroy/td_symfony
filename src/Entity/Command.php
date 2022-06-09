@@ -26,9 +26,9 @@ class Command
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateCreation", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="dateCreation", type="datetime", nullable=false)
      */
-    private $datecreation = 'current_timestamp()';
+    private $datecreation;
 
     /**
      * @var string
@@ -50,6 +50,20 @@ class Command
      * @ORM\Column(name="toPay", type="decimal", precision=6, scale=2, nullable=false)
      */
     private $topay;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="itemsNumber", type="integer", nullable=false)
+     */
+    private $itemsnumber;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="missingNumber", type="integer", nullable=false)
+     */
+    private $missingnumber;
 
     /**
      * @var \User
@@ -97,11 +111,23 @@ class Command
     private $idproduct;
 
     /**
+     * @var \Command
+     *
+     * @ORM\Id
+     * @ORM\OneToMany(targetEntity="CommandDetail", mappedBy="command")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id", referencedColumnName="idCommand")
+     * })
+     */
+    private $details;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->idproduct = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->details = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -213,6 +239,60 @@ class Command
     public function removeIdproduct(Product $idproduct): self
     {
         $this->idproduct->removeElement($idproduct);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommandDetail>
+     */
+    public function getDetails(): Collection
+    {
+        return $this->details;
+    }
+
+    public function addDetail(CommandDetail $detail): self
+    {
+        if (!$this->details->contains($detail)) {
+            $this->details[] = $detail;
+            $detail->setCommand($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDetail(CommandDetail $detail): self
+    {
+        if ($this->details->removeElement($detail)) {
+            // set the owning side to null (unless already changed)
+            if ($detail->getCommand() === $this) {
+                $detail->setCommand(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getItemsnumber()
+    {
+        return $this->itemsnumber;
+    }
+
+    public function setItemsnumber($itemsnumber): self
+    {
+        $this->itemsnumber = $itemsnumber;
+
+        return $this;
+    }
+
+    public function getMissingnumber()
+    {
+        return $this->missingnumber;
+    }
+
+    public function setMissingnumber($missingnumber): self
+    {
+        $this->missingnumber = $missingnumber;
 
         return $this;
     }

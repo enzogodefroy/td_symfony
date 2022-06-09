@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créneaux{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { 
+      margin: 1em auto; 
+      width: 95%; 
+      font: 18px/1.5 sans-serif;
+      
+    }
+
+    body {
+      background-color: #a2a2a2 !important;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.css">
+<script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js"></script>
+
+<div class="example-wrapper">
+  <table class="ui celled table">
+    <thead>
+      <tr>
+          <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in timeslots %}
+        <tr>
+            <form method="POST" action="/basketValid">
+                <td>
+                    {{ t.slotDate.format('d/m/Y H:i:s') }}
+                    <input type="hidden" value="{{ idBasket }}" name="idBasket" />
+                    <input type="hidden" value="{{ t.id }}" name="idTimeslot" />
+                    <button class="ui button" onclick="this.form.submit()">Choisir</button>
+                </td>
+            </form>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
